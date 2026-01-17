@@ -27,7 +27,7 @@ export default function Page() {
 
       <h1 className="font-departure text-[40px] md:text-[84px] relative z-10 text-center h-[120px] md:h-auto leading-tight">
         <ScrambleHover duration={800} speed={50}>
-          <AnimatedText text="OSAMA AI COMING SOON" />
+          <AnimatedText text="OSMA AI COMING SOON" />
         </ScrambleHover>
       </h1>
 

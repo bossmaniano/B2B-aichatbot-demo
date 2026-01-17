@@ -1,3 +1,5 @@
+"use client"
+
 import { CalEmbed } from "@/components/cal-embed";
 
 export const metadata = {

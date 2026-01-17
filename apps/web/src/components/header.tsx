@@ -39,7 +39,7 @@ export function Header() {
         <ul className="flex items-center gap-4">
           <li>
             <a
-              href="https://github.com/midday-ai/osma"
+              href="https://github.com/bossmaniano/B2B-aichatbot-demo/"
               className="text-sm px-4 py-2 bg-primary text-secondary rounded-full font-medium"
             >
               Github
