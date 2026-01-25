@@ -1,26 +1,26 @@
 "use client";
 
-import { Button } from "@osma/ui/components/ui/button";
 import {
   ButtonGroup,
-  ButtonGroupText,
 } from "@osma/ui/components/ui/button-group";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@osma/ui/components/ui/tooltip";
-import { cn } from "@osma/ui/lib/utils";
+import { createContext, memo, useContext, useEffect, useState } from "react";
+
+import { Button } from "@osma/ui/components/ui/button";
+import { Streamdown } from "streamdown";
+import type { UIMessage } from "ai";
 import { cjk } from "@streamdown/cjk";
+import { cn } from "@osma/ui/lib/utils";
 import { code } from "@streamdown/code";
 import { math } from "@streamdown/math";
 import { mermaid } from "@streamdown/mermaid";
-import type { UIMessage } from "ai";
-import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
-import type { ComponentProps, HTMLAttributes, ReactElement } from "react";
-import { createContext, memo, useContext, useEffect, useState } from "react";
-import { Streamdown } from "streamdown";
 
 export type MessageProps = HTMLAttributes<HTMLDivElement> & {
   from: UIMessage["role"];
@@ -291,22 +291,22 @@ export const MessageBranchPage = ({
   const { currentBranch, totalBranches } = useMessageBranch();
 
   return (
-    <ButtonGroupText
+    <span
       className={cn(
-        "border-none bg-transparent text-muted-foreground shadow-none",
+        "flex items-center px-3 text-sm text-muted-foreground",
         className
       )}
       {...props}
     >
       {currentBranch + 1} of {totalBranches}
-    </ButtonGroupText>
+    </span>
   );
 };
 
 export type MessageResponseProps = ComponentProps<typeof Streamdown>;
 
 export const MessageResponse = memo(
-  ({ className, ...props }: MessageResponseProps) => (
+  ({ className, ...props }: MessageResponseProps): JSX.Element => (
     <Streamdown
       className={cn(
         "size-full [&>*:first-child]:mt-0 [&>*:last-child]:mb-0",

@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import * as React from "react";
 import {
   Conversation,
   ConversationContent,
@@ -70,7 +70,6 @@ import {
   SearchIcon,
 } from "lucide-react";
 import { nanoid } from "nanoid";
-import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 interface MessageType {
@@ -315,16 +314,16 @@ const mockMessageResponses = [
 ];
 
 const Example = () => {
-  const [model, setModel] = useState<string>(models[0]?.id ?? "");
-  const [modelSelectorOpen, setModelSelectorOpen] = useState(false);
-  const [text, setText] = useState<string>("");
-  const [useWebSearch, setUseWebSearch] = useState<boolean>(false);
-  const [useMicrophone, setUseMicrophone] = useState<boolean>(false);
-  const [_status, setStatus] = useState<
+  const [model, setModel] = React.useState<string>(models[0]?.id ?? "");
+  const [modelSelectorOpen, setModelSelectorOpen] = React.useState(false);
+  const [text, setText] = React.useState<string>("");
+  const [useWebSearch, setUseWebSearch] = React.useState<boolean>(false);
+  const [useMicrophone, setUseMicrophone] = React.useState<boolean>(false);
+  const [_status, setStatus] = React.useState<
     "submitted" | "streaming" | "ready" | "error"
   >("ready");
-  const [messages, setMessages] = useState<MessageType[]>([]);
-  const [_streamingMessageId, setStreamingMessageId] = useState<string | null>(
+  const [messages, setMessages] = React.useState<MessageType[]>([]);
+  const [_streamingMessageId, setStreamingMessageId] = React.useState<string | null>(
     null
   );
 
@@ -417,7 +416,7 @@ const Example = () => {
   };
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: streamContent and streamReasoning only use stable setMessages
-  const streamMessageResponse = useCallback(
+  const streamMessageResponse = React.useCallback(
     async (
       messageKey: string,
       versionId: string,
@@ -442,7 +441,7 @@ const Example = () => {
     []
   );
 
-  const streamMessage = useCallback(
+  const streamMessage = React.useCallback(
     async (message: MessageType) => {
       if (message.from === "user") {
         setMessages((prev) => [...prev, message]);
@@ -480,7 +479,7 @@ const Example = () => {
     [streamMessageResponse]
   );
 
-  const addUserMessage = useCallback(
+  const addUserMessage = React.useCallback(
     (content: string) => {
       const userMessage: MessageType = {
         key: `user-${Date.now()}`,
@@ -540,7 +539,7 @@ const Example = () => {
     [streamMessageResponse]
   );
 
-  useEffect(() => {
+  React.useEffect(() => {
     // Reset state on mount to ensure fresh component
     setMessages([]);
 
@@ -619,15 +618,20 @@ const Example = () => {
                         </Sources>
                       )}
                       {message.reasoning && (
-                        <Reasoning
-                          duration={message.reasoning.duration}
-                          isStreaming={message.isReasoningStreaming}
-                        >
-                          <ReasoningTrigger />
-                          <ReasoningContent>
-                            {message.reasoning.content}
-                          </ReasoningContent>
-                        </Reasoning>
+                        <>
+                          {/* @ts-ignore - React 19 type compatibility issue with Bun's @types/react resolution */}
+                          <Reasoning
+                            duration={message.reasoning.duration}
+                            isStreaming={message.isReasoningStreaming}
+                          >
+                            {/* @ts-ignore - React 19 type compatibility issue with Bun's @types/react resolution */}
+                            <ReasoningTrigger />
+                            {/* @ts-ignore - React 19 type compatibility issue with Bun's @types/react resolution */}
+                            <ReasoningContent>
+                              {message.reasoning.content}
+                            </ReasoningContent>
+                          </Reasoning>
+                        </>
                       )}
                       {(message.from === "user" ||
                         message.isReasoningComplete ||
@@ -638,6 +642,7 @@ const Example = () => {
                             "group-[.is-assistant]:bg-transparent group-[.is-assistant]:p-0 group-[.is-assistant]:text-foreground"
                           )}
                         >
+                          {/* @ts-ignore - React 19 type compatibility issue with Bun's @types/react resolution */}
                           <MessageResponse>{version.content}</MessageResponse>
                         </MessageContent>
                       )}

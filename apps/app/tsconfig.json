@@ -6,7 +6,9 @@
       "@/*": ["./src/*"]
     },
     "strict": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "skipLibCheck": true,
+    "types": ["react", "react-dom"]
   },
   "include": [
     "next-env.d.ts",

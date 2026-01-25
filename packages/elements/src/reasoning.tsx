@@ -1,21 +1,22 @@
 "use client";
 
-import { useControllableState } from "@radix-ui/react-use-controllable-state";
+import { BrainIcon, ChevronDownIcon } from "lucide-react";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@osma/ui/components/ui/collapsible";
-import { cn } from "@osma/ui/lib/utils";
+import type { ComponentProps, ReactNode } from "react";
+import { createContext, memo, useContext, useEffect, useState } from "react";
+
+import { Shimmer } from "./shimmer";
+import { Streamdown } from "streamdown";
 import { cjk } from "@streamdown/cjk";
+import { cn } from "@osma/ui/lib/utils";
 import { code } from "@streamdown/code";
 import { math } from "@streamdown/math";
 import { mermaid } from "@streamdown/mermaid";
-import { BrainIcon, ChevronDownIcon } from "lucide-react";
-import type { ComponentProps, ReactNode } from "react";
-import { createContext, memo, useContext, useEffect, useState } from "react";
-import { Streamdown } from "streamdown";
-import { Shimmer } from "./shimmer";
+import { useControllableState } from "@radix-ui/react-use-controllable-state";
 
 interface ReasoningContextValue {
   isStreaming: boolean;
@@ -55,7 +56,7 @@ export const Reasoning = memo(
     duration: durationProp,
     children,
     ...props
-  }: ReasoningProps) => {
+  }: ReasoningProps): JSX.Element => {
     const [isOpen, setIsOpen] = useControllableState({
       prop: open,
       defaultProp: defaultOpen,
@@ -137,7 +138,7 @@ export const ReasoningTrigger = memo(
     children,
     getThinkingMessage = defaultGetThinkingMessage,
     ...props
-  }: ReasoningTriggerProps) => {
+  }: ReasoningTriggerProps): JSX.Element => {
     const { isStreaming, isOpen, duration } = useReasoning();
 
     return (
@@ -172,7 +173,7 @@ export type ReasoningContentProps = ComponentProps<
 };
 
 export const ReasoningContent = memo(
-  ({ className, children, ...props }: ReasoningContentProps) => (
+  ({ className, children, ...props }: ReasoningContentProps): JSX.Element => (
     <CollapsibleContent
       className={cn(
         "mt-4 text-sm",
